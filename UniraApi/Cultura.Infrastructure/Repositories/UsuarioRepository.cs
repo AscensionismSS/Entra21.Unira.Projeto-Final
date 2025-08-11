@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Cultura.Application.Interfaces.Repositorio;
-using Cultura.Data;
+﻿using Cultura.Data;
 using Cultura.Domain.Entities;
+using Cultura.Infrastructure.Interfaces.Repositorio;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Cultura.Infrastructure.Repositories
 {
@@ -24,8 +20,23 @@ namespace Cultura.Infrastructure.Repositories
         public async Task CreateUsuario(Usuario usuario)
         {
             
-            await _context.Set<Usuario>().AddAsync(usuario);
+            await _context.Usuarios.AddAsync(usuario);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Usuario> GetUsuarioById(int id)
+        {
+            return await _context.Usuarios.Include(u => u.Endereco).FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<bool> UpdateUsuario(Usuario usuario)
+        {
+            _context.Usuarios.Update(usuario);
+            await _context.SaveChangesAsync();
+
+            return true;
+
+        }
+      
     }
 }

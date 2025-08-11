@@ -23,5 +23,18 @@ namespace Entra21.Senac.Cultura.Api.Controllers
             await _usuarioService.CreateUsuario(usuarioDto);
             return Ok();
         }
+
+        [HttpPut]
+        [ValidarDto(typeof(UsuarioCreateDto))]
+
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UsuarioCreateDto usuarioDto)
+        {
+            var result = await _usuarioService.UpdateUsuario(id, usuarioDto);
+            if (result)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
     }
 }

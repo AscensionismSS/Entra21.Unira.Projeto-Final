@@ -1,12 +1,13 @@
-using Cultura.Application.Interfaces.Repositorio;
+
 using Cultura.Application.Interfaces.Service;
 using Cultura.Application.Services;
 using Cultura.Application.Validator;
 using Cultura.Data;
+using Cultura.Infrastructure.Interfaces.Repositorio;
 using Cultura.Infrastructure.Repositories;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

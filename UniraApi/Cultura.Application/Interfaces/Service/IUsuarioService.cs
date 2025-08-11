@@ -10,5 +10,7 @@ namespace Cultura.Application.Interfaces.Service
     public interface IUsuarioService
     {
         Task CreateUsuario(UsuarioCreateDto usuarioCreateDto);
+
+        Task<bool> UpdateUsuario(int id, UsuarioCreateDto usuarioDto);
     }
 }
