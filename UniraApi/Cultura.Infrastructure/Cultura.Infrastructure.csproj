@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cultura.Application\Cultura.Application.csproj" />
     <ProjectReference Include="..\Cultura.Domain\Cultura.Domain.csproj" />
   </ItemGroup>
 
