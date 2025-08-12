@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cultura.Application.Dtos.Input
 {
-    public class EnderecoCreateDto
+    public class EnderecoInputDto
     {
         public string Cep { get; set; }
         public string Estado { get; set; }
