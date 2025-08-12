@@ -37,6 +37,13 @@ namespace Cultura.Infrastructure.Repositories
             return true;
 
         }
-      
+
+        public async Task<Usuario> LoginValidation(string email, string senha)
+        {
+            return await _context.Usuarios
+                .Include(u => u.Endereco)
+                .FirstOrDefaultAsync(u => u.Email == email && u.Senha == senha);
+        }
+
     }
 }

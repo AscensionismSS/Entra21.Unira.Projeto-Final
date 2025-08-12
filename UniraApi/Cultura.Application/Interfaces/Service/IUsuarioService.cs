@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cultura.Application.Dtos.Input;
+using Cultura.Application.Dtos.Output;
+using Cultura.Domain.Entities;
 
 namespace Cultura.Application.Interfaces.Service
 {
     public interface IUsuarioService
     {
-        Task CreateUsuario(UsuarioCreateDto usuarioCreateDto);
+        Task CreateUsuario(UsuarioInputDto usuarioCreateDto);
 
-        Task<bool> UpdateUsuario(int id, UsuarioCreateDto usuarioDto);
+        Task<bool> UpdateUsuario(int id, UsuarioInputDto usuarioDto);
+
+        Task<UsuarioOutputDto> LoginValidation(LoginInputDto login);
     }
 }

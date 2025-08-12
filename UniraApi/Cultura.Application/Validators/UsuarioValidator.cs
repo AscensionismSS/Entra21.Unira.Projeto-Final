@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace Cultura.Application.Validator;
 
-public class UsuarioValidator : AbstractValidator<UsuarioCreateDto>
+public class UsuarioValidator : AbstractValidator<UsuarioInputDto>
 {
     public UsuarioValidator()
     {

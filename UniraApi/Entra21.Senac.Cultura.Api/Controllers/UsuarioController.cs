@@ -17,24 +17,54 @@ namespace Entra21.Senac.Cultura.Api.Controllers
         }
 
         [HttpPost]
-        [ValidarDto(typeof(UsuarioCreateDto))]
-        public async Task<IActionResult> AddUser([FromBody] UsuarioCreateDto usuarioDto)
+        [ValidarDto(typeof(UsuarioInputDto))]
+        public async Task<IActionResult> AddUser([FromBody] UsuarioInputDto usuarioDto)
         {
-            await _usuarioService.CreateUsuario(usuarioDto);
-            return Ok();
+            try
+            {
+                await _usuarioService.CreateUsuario(usuarioDto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao adicionar usuário: {ex.Message}");
+            }
         }
 
         [HttpPut]
-        [ValidarDto(typeof(UsuarioCreateDto))]
-
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UsuarioCreateDto usuarioDto)
+        [ValidarDto(typeof(UsuarioInputDto))]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UsuarioInputDto usuarioDto)
         {
-            var result = await _usuarioService.UpdateUsuario(id, usuarioDto);
-            if (result)
+            try
             {
-                return Ok();
+                var result = await _usuarioService.UpdateUsuario(id, usuarioDto);
+                if (result)
+                {
+                    return Ok();
+                }
+                return NotFound("Usuário não encontrado.");
             }
-            return NotFound();
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar usuário: {ex.Message}");
+            }
+        }
+
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginValidation([FromBody] LoginInputDto login)
+        {
+            try
+            {
+                var usuario = await _usuarioService.LoginValidation(login);
+                if (usuario == null)
+                    return NotFound("Usuário não encontrado ou credenciais inválidas.");
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao validar login: {ex.Message}");
+            }
         }
     }
 }

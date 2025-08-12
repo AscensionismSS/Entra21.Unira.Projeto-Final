@@ -9,5 +9,7 @@ namespace Cultura.Infrastructure.Interfaces.Repositorio
         Task<Usuario> GetUsuarioById(int id);
 
         Task<bool> UpdateUsuario(Usuario usuario);
+
+        Task<Usuario> LoginValidation(string email, string senha);
     }
 }
