@@ -52,6 +52,7 @@ namespace Entra21.Senac.Cultura.Api.Controllers
 
 
         [HttpPost("Login")]
+        [ValidarDto(typeof(LoginInputDto))]
         public async Task<IActionResult> LoginValidation([FromBody] LoginInputDto login)
         {
             try
