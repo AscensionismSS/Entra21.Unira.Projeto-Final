@@ -10,10 +10,10 @@ namespace Cultura.Domain.Entities
         public string Descricao { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Evento> Eventos { get; set; }
+        public ICollection<Evento> Eventos { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Favorito> Favoritos { get; set; }
+        public ICollection<Favorito> Favoritos { get; set; }
     }
 
 }

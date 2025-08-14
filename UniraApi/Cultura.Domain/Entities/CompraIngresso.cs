@@ -13,9 +13,9 @@ namespace Cultura.Domain.Entities
         public int IngressoId { get; set; }
 
         [JsonIgnore]
-        public virtual Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; }
 
         [JsonIgnore]
-        public virtual Ingresso Ingresso { get; set; }
+        public Ingresso Ingresso { get; set; }
     }
 }

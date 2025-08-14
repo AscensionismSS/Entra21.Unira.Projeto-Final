@@ -10,7 +10,7 @@ namespace Cultura.Domain.Entities
     public class Ingresso
     {
         public int Id { get; set; }
-        public decimal Preco { get; set; }
+        public decimal Preco { get; set; } // 'decimal' está correto para dinheiro!
         public int Quantidade { get; set; }
         public int EventoId { get; set; }
         public int TipoIngressoId { get; set; }
