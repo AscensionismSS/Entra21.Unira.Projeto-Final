@@ -4,7 +4,6 @@ using System.Text.Json.Serialization;
 
 namespace Cultura.Domain.Entities
 {
-
     public class Evento
     {
         public int Id { get; set; }
@@ -14,20 +13,20 @@ namespace Cultura.Domain.Entities
         public DateTime DataRegistro { get; set; }
 
         public int CategoriaId { get; set; }
-        public int UsuarioId { get; set; }
+        public int UsuarioId { get; set; } // Representa o organizador
         public int EnderecoId { get; set; }
 
         [JsonIgnore]
-        public virtual Categoria Categoria { get; set; }
+        public Categoria Categoria { get; set; }
 
         [JsonIgnore]
-        public virtual Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; } // Organizador
 
         [JsonIgnore]
-        public virtual Endereco Endereco { get; set; }
+        public Endereco Endereco { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Ingresso> Ingressos { get; set; }
+        public ICollection<Ingresso> Ingressos { get; set; }
     }
 
 }

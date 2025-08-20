@@ -11,7 +11,6 @@ namespace Cultura.Domain.Entities
     }
     public class Usuario
     {
-
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
@@ -24,10 +23,13 @@ namespace Cultura.Domain.Entities
 
         [JsonIgnore]
         public Endereco Endereco { get; set; }
+
         [JsonIgnore]
         public ICollection<Evento> EventosOrganizados { get; set; }
+
         [JsonIgnore]
         public ICollection<CompraIngresso> Compras { get; set; }
+
         [JsonIgnore]
         public ICollection<Favorito> Favoritos { get; set; }
 
