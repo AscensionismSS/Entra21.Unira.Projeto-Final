@@ -14,9 +14,21 @@ namespace Cultura.Domain.Entities
         public string Numero { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Usuario> Usuarios { get; set; }
+        public ICollection<Usuario> Usuarios { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Evento> Eventos { get; set; }
+        public ICollection<Evento> Eventos { get; set; }
+
+        
+
+        public Endereco(string cep, string estado, string cidade, string bairro, string rua, string numero)
+        {
+            Cep = cep;
+            Estado = estado;
+            Cidade = cidade;
+            Bairro = bairro;
+            Rua = rua;
+            Numero = numero; 
+        }
     }
 }

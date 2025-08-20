@@ -3,8 +3,10 @@ using Cultura.Application.Interfaces.Service;
 using Cultura.Application.Services;
 using Cultura.Application.Validator;
 using Cultura.Data;
+using Cultura.Infrastructure.Data;
 using Cultura.Infrastructure.Interfaces.Repositorio;
 using Cultura.Infrastructure.Repositories;
+using Cultura.Infrastructure.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +32,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Registro dos serviços
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+builder.Services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Autorização
 builder.Services.AddAuthorization();

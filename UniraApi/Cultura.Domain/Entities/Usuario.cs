@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Cultura.Domain.Entities
 {
@@ -23,7 +20,7 @@ namespace Cultura.Domain.Entities
         public DateTime DataNascimento { get; set; }
         public DateTime DataRegistro { get; set; } = DateTime.Now;
         public TipoUsuario Tipo { get; set; } = TipoUsuario.NaoOrganizador;
-        public int EnderecoId { get; set; }
+        public int EnderecoId { get; set; } 
 
         [JsonIgnore]
         public Endereco Endereco { get; set; }
@@ -33,5 +30,17 @@ namespace Cultura.Domain.Entities
         public ICollection<CompraIngresso> Compras { get; set; }
         [JsonIgnore]
         public ICollection<Favorito> Favoritos { get; set; }
+
+        public Usuario() { }
+
+        public Usuario(string nome, string email, string senha, string telefone, DateTime dataNascimento, Endereco endereco)
+        {
+            Nome = nome;
+            Email = email;
+            Senha = senha;
+            Telefone = telefone;
+            DataNascimento = dataNascimento;
+            Endereco = endereco;
+        }
     }
 }

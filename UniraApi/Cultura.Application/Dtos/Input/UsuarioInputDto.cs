@@ -15,5 +15,8 @@ namespace Cultura.Application.Dtos.Input
         public DateTime DataNascimento { get; set; }
 
         public EnderecoInputDto Endereco { get; set; }
+
+
+
     }
 }

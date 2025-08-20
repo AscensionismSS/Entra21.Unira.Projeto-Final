@@ -13,8 +13,6 @@ namespace Cultura.Application.Interfaces.Service
     {
         Task CreateUsuario(UsuarioInputDto usuarioCreateDto);
 
-        Task<bool> UpdateUsuario(int id, UsuarioInputDto usuarioDto);
-
         Task<UsuarioOutputDto> LoginValidation(LoginInputDto login);
     }
 }

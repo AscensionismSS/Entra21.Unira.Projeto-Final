@@ -17,25 +17,21 @@ namespace Cultura.Infrastructure.Repositories
             }
 
 
-        public async Task CreateUsuario(Usuario usuario)
+        public void CreateUsuario(Usuario usuario)
         {
             
-            await _context.Usuarios.AddAsync(usuario);
-            await _context.SaveChangesAsync();
+            _context.Usuarios.Add(usuario);
+            
+        }
+
+        public void UpdateUsuario(Usuario usuario)
+        {
+            _context.Usuarios.Update(usuario);
         }
 
         public async Task<Usuario> GetUsuarioById(int id)
         {
             return await _context.Usuarios.Include(u => u.Endereco).FirstOrDefaultAsync(u => u.Id == id);
-        }
-
-        public async Task<bool> UpdateUsuario(Usuario usuario)
-        {
-            _context.Usuarios.Update(usuario);
-            await _context.SaveChangesAsync();
-
-            return true;
-
         }
 
         public async Task<Usuario> LoginValidation(string email, string senha)

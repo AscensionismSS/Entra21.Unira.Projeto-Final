@@ -31,24 +31,7 @@ namespace Entra21.Senac.Cultura.Api.Controllers
             }
         }
 
-        [HttpPut]
-        [ValidarDto(typeof(UsuarioInputDto))]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UsuarioInputDto usuarioDto)
-        {
-            try
-            {
-                var result = await _usuarioService.UpdateUsuario(id, usuarioDto);
-                if (result)
-                {
-                    return Ok();
-                }
-                return NotFound("Usuário não encontrado.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Erro ao atualizar usuário: {ex.Message}");
-            }
-        }
+
 
 
         [HttpPost("Login")]

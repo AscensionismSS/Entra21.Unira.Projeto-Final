@@ -4,11 +4,12 @@ namespace Cultura.Infrastructure.Interfaces.Repositorio
 {
     public interface IUsuarioRepository
     {
-        Task CreateUsuario(Usuario usuario); 
+        void CreateUsuario(Usuario usuario);
+
+        void UpdateUsuario(Usuario usuario);
+
 
         Task<Usuario> GetUsuarioById(int id);
-
-        Task<bool> UpdateUsuario(Usuario usuario);
 
         Task<Usuario> LoginValidation(string email, string senha);
     }

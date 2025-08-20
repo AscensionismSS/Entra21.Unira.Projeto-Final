@@ -1,82 +1,83 @@
-﻿
-using Cultura.Application.Dtos.Input;
+﻿using Cultura.Application.Dtos.Input;
 using Cultura.Application.Dtos.Output;
 using Cultura.Application.Interfaces.Service;
 using Cultura.Domain.Entities;
 using Cultura.Infrastructure.Interfaces.Repositorio;
+using Cultura.Infrastructure.Repositories.Interfaces;
+
 
 namespace Cultura.Application.Services
 {
     public class UsuarioService : IUsuarioService
     {
-
         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IEnderecoRepository _enderecoRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository)
+        
+
+        public UsuarioService(
+            IUsuarioRepository usuarioRepository,
+            IEnderecoRepository enderecoRepository,
+            IUnitOfWork unitOfWork
+           
+            )
         {
             _usuarioRepository = usuarioRepository;
+            _enderecoRepository = enderecoRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task CreateUsuario(UsuarioInputDto usuarioDto)
         {
-            // Map UsuarioCreateDto to Usuario entity
-            var usuario = new Usuario
+
+            var endereco = await _enderecoRepository.BuscarEnderecoUnicoAsync(
+                usuarioDto.Endereco.Cep,
+                usuarioDto.Endereco.Bairro,
+                usuarioDto.Endereco.Rua,
+                usuarioDto.Endereco.Numero
+            );
+
+            if (endereco == null)
             {
-                Nome = usuarioDto.Nome,
-                Email = usuarioDto.Email,
-                Senha = usuarioDto.Senha,
-                Telefone = usuarioDto.Telefone,
-                DataNascimento = usuarioDto.DataNascimento,
-                Endereco = new Endereco
-                {
-                    Cep = usuarioDto.Endereco.Cep,
-                    Estado = usuarioDto.Endereco.Estado,
-                    Cidade = usuarioDto.Endereco.Cidade,
-                    Bairro = usuarioDto.Endereco.Bairro,
-                    Numero = usuarioDto.Endereco.Numero,
-                    Rua = usuarioDto.Endereco.Rua
-                }
-            };
+                endereco = new Endereco(
+                    usuarioDto.Endereco.Cep,
+                    usuarioDto.Endereco.Estado,
+                    usuarioDto.Endereco.Cidade,
+                    usuarioDto.Endereco.Bairro,
+                    usuarioDto.Endereco.Rua,
+                    usuarioDto.Endereco.Numero
+                );
 
-            await _usuarioRepository.CreateUsuario(usuario);
-        }
-
-
-        public async Task<bool> UpdateUsuario(int id, UsuarioInputDto usuarioDto)
-        {
-
-            var usuario = await _usuarioRepository.GetUsuarioById(id);
-            if (usuario == null)
-            {
-                return false;
+                _enderecoRepository.CreateEndereco(endereco);
             }
 
-            usuario.Nome = usuarioDto.Nome;
-            usuario.Email = usuarioDto.Email;
-            usuario.Senha = usuarioDto.Senha;
-            usuario.Telefone = usuarioDto.Telefone;
-            usuario.DataNascimento = usuarioDto.DataNascimento;
+           
+            var usuario = new Usuario(
+                usuarioDto.Nome,
+                usuarioDto.Email,
+                usuarioDto.Senha,
+                usuarioDto.Telefone,
+                usuarioDto.DataNascimento,
+                endereco 
+            );
+
+            _usuarioRepository.CreateUsuario(usuario);
 
 
-            usuario.Endereco.Cep = usuarioDto.Endereco.Cep;
-            usuario.Endereco.Estado = usuarioDto.Endereco.Estado;
-            usuario.Endereco.Cidade = usuarioDto.Endereco.Cidade;
-            usuario.Endereco.Bairro = usuarioDto.Endereco.Bairro;
-            usuario.Endereco.Numero = usuarioDto.Endereco.Numero;
-            usuario.Endereco.Rua = usuarioDto.Endereco.Rua;
-
-            return await _usuarioRepository.UpdateUsuario(usuario);
+            int linhasAfetadas = await _unitOfWork.CommitAsync();
 
         }
 
+        
         public async Task<UsuarioOutputDto> LoginValidation(LoginInputDto login)
         {
             var usuario = await _usuarioRepository.LoginValidation(login.Email, login.Senha);
             if (usuario == null)
             {
-                return null; 
+                return null;
             }
-           
+
             var usuarioOutput = new UsuarioOutputDto
             {
                 Id = usuario.Id,
@@ -95,7 +96,6 @@ namespace Cultura.Application.Services
                 }
             };
             return usuarioOutput;
-
         }
     }
 }
