@@ -44,5 +44,6 @@ namespace Cultura.Domain.Entities
             DataNascimento = dataNascimento;
             Endereco = endereco;
         }
+        
     }
 }

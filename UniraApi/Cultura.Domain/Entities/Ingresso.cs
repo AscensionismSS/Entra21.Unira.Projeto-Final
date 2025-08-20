@@ -9,6 +9,8 @@ namespace Cultura.Domain.Entities
 {
     public class Ingresso
     {
+
+
         public int Id { get; set; }
         public decimal Preco { get; set; } // 'decimal' está correto para dinheiro!
         public int Quantidade { get; set; }
@@ -22,6 +24,11 @@ namespace Cultura.Domain.Entities
         public TipoIngresso TipoIngresso { get; set; }
 
         [JsonIgnore]
-        public ICollection<CompraIngresso> Compras { get; set; }
+        public ICollection<CompraIngresso> Compras
+        {
+            get; set;
+        }
+
+
     }
 }

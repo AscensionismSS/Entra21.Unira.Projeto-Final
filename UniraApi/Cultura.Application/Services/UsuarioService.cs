@@ -28,31 +28,12 @@ namespace Cultura.Application.Services
             _unitOfWork = unitOfWork;
         }
 
+
         public async Task CreateUsuario(UsuarioInputDto usuarioDto)
         {
+            var endereco = await VerificarEndereco(usuarioDto.Endereco);
+       
 
-            var endereco = await _enderecoRepository.BuscarEnderecoUnicoAsync(
-                usuarioDto.Endereco.Cep,
-                usuarioDto.Endereco.Bairro,
-                usuarioDto.Endereco.Rua,
-                usuarioDto.Endereco.Numero
-            );
-
-            if (endereco == null)
-            {
-                endereco = new Endereco(
-                    usuarioDto.Endereco.Cep,
-                    usuarioDto.Endereco.Estado,
-                    usuarioDto.Endereco.Cidade,
-                    usuarioDto.Endereco.Bairro,
-                    usuarioDto.Endereco.Rua,
-                    usuarioDto.Endereco.Numero
-                );
-
-                _enderecoRepository.CreateEndereco(endereco);
-            }
-
-           
             var usuario = new Usuario(
                 usuarioDto.Nome,
                 usuarioDto.Email,
@@ -97,5 +78,34 @@ namespace Cultura.Application.Services
             };
             return usuarioOutput;
         }
+
+
+        #region Métodos Auxiliares
+        private async Task<Endereco> VerificarEndereco(EnderecoInputDto enderecoDto)
+        {
+            var enderecoExistente = await _enderecoRepository.BuscarEnderecoUnicoAsync(
+                enderecoDto.Cep,
+                enderecoDto.Bairro,
+                enderecoDto.Rua,
+                enderecoDto.Numero
+            );
+
+            if (enderecoExistente == null)
+            {
+                var novoEndereco = new Endereco(
+                    enderecoDto.Cep,
+                    enderecoDto.Estado,
+                    enderecoDto.Cidade,
+                    enderecoDto.Bairro,
+                    enderecoDto.Rua,
+                    enderecoDto.Numero
+                );
+                _enderecoRepository.CreateEndereco(novoEndereco);
+                return novoEndereco;
+            }
+            return enderecoExistente;
+        }
+
+        #endregion
     }
 }
